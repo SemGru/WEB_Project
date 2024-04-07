@@ -1,9 +1,10 @@
 import random
-
+import sqlite3
 from flask import Flask, url_for, request, render_template
 
 app = Flask(__name__)
 NAME = []
+count = 1
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -46,10 +47,17 @@ def astronaut_selection():
 
 @app.route('/tasks', methods=['POST', 'GET'])
 def tasks():
+    # global count
+    # DB = sqlite3.connect('DB/test_web.db')
+    # SQL = DB.cursor()
     # if request.method == 'GET':
-    # прикручитить получание названия файло виз БД
-    img = random.choice(['/static/img/1280.gif', '/static/img/1267.gif'])
-    # удаление названия файла чтобы избежать повтора
+
+    # база данных
+    # al = SQL.execute(f"SELECT * FROM task WHERE number == {count}").fetchall()
+    # img = str(random.choice(al[1]))
+    img = random.choice(['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif'])
+    # print(img)
+    # count += 1
     return f'''<!doctype html>
                     <html lang="en">
                         <head>
@@ -70,10 +78,6 @@ def tasks():
                         </form>
                         <body>
                     </html>'''
-    # if request.method == 'POST':
-    #     print(NAME)
-    #     print(request.form)
-    #     tasks()
 
 
 if __name__ == '__main__':

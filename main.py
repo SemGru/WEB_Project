@@ -28,9 +28,9 @@ def astronaut_selection():
                     <div>
                         <form class="login_form" method="post">
 
-                            <input type="text" class="form-control" id="surname" aria-describedby="surnamelHelp" placeholder="Введите фамилию" name="surname" >
-                            <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Введите имя" name="name" >
-                            <input type="text" class="form-control" id="class" aria-describedby="classHelp" placeholder="Введите класс в формате 9 А" name="class" >
+                            <input type="text" class="form-control" id="surname" aria-describedby="surnamelHelp" placeholder="Введите фамилию" name="surname" required>
+                            <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Введите имя" name="name" required>
+                            <input type="text" class="form-control" id="class" aria-describedby="classHelp" placeholder="Введите класс в формате 9 А" name="class" required>
                             <br>
                             <input type="text" class="form-control" id="var" aria-describedby="classHelp" placeholder="Введите вариант работы" name="var">
                             <br>
@@ -71,7 +71,7 @@ def tasks():
                         <form class="work_form" method="post">
                         <img class="displayed" src="{img}">
                         <div class="form-group">
-                                        <label for="about">Решение:</label>
+                                        <label for="about">Напишите решение:</label>
                                         <textarea class="form-control" id="about" rows="5" name="decision"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" Centered button >Отправить</button>

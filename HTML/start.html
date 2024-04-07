@@ -1,24 +1,18 @@
 {% extends "HTML/base.html" %}
 
 {% block content %}
-<h2>Список професиий</h2>
-{% set user_list = ['инженер-строитель', 'пилот', 'строитель', 'экзобиолог', 'врач', 'инженер по терраформированию',
-'климатолог', 'астрогеолог', 'гляциолог', 'инженер жизнеобеспечения', 'метеоролог', 'оператор марсохода',
-'киберинженер', 'штурман', 'пилот дронов', 'специалист по радиационной защите'] %}
-{% if prof == 'ul'%}
-<ul>
-{% for user in user_list %}
-<li>{{ user }}</li>
-{% endfor %}
-</ul>
-{% elif prof == 'ol'%}
-<ol>
-{% for user in user_list %}
-<li>{{ user }}</li>
-{% endfor %}
-</ol>
+<h1 align="center">Проверочная работа</h1>
+                    <h3 align="center">по информатике</h3>
+                    <div>
+                        <form class="login_form" method="post">
 
-{% else %}
-<a>Неверный параметр.</a>
-{% endif %}
+                            <input type="text" class="form-control" id="surname" aria-describedby="surnamelHelp" placeholder="Введите фамилию" name="surname" >
+                            <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Введите имя" name="name" >
+                            <input type="text" class="form-control" id="class" aria-describedby="classHelp" placeholder="Введите класс в формате 9 А" name="class" >
+                            <br>
+                            <input type="text" class="form-control" id="var" aria-describedby="classHelp" placeholder="Введите вариант работы" name="var">
+                            <br>
+                             <button type="submit" class="btn btn-primary" Centered button >Начать</button>
+                        </form>
+                    </div>
 {% endblock %}

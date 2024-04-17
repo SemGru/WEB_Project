@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form class="work_form" method="post">
+    <img class="displayed" src="{{ img }}">
+    <div class="form-group">
+        <label for="about">Напишите решение:</label>
+        <textarea class="form-control" id="about" rows="5" name="decision"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" Centered button>Отправить</button>
+</form>
+{% endblock %}

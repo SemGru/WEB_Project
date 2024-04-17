@@ -7,77 +7,48 @@ NAME = []
 count = 1
 
 
-@app.route('/', methods=['POST', 'GET'])
-@app.route('/start', methods=['POST', 'GET'])
-def astronaut_selection():
-    if request.method == 'GET':
-        # required
-        # return render_template('start.html')
-        return f'''<!doctype html>
-                <html lang="en">
-                  <head>
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-                    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
-                    <title>Проверочная работа</title>
-                  </head>
-                  <body>
-                    <h1 align="center">Проверочная работа</h1>
-                    <h3 align="center">по информатике</h3>
-                    <div>
-                        <form class="login_form" method="post">
+class Decision():
+    def __init__(self):
+        self.result = []
 
-                            <input type="text" class="form-control" id="surname" aria-describedby="surnamelHelp" placeholder="Введите фамилию" name="surname" required>
-                            <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Введите имя" name="name" required>
-                            <input type="text" class="form-control" id="class" aria-describedby="classHelp" placeholder="Введите класс в формате 9 А" name="class" required>
-                            <br>
-                            <input type="text" class="form-control" id="var" aria-describedby="classHelp" placeholder="Введите вариант работы" name="var">
-                            <br>
-                             <button type="submit" class="btn btn-primary" Centered button >Начать</button>
-                        </form>
-                    </div>
-                  </body>
-                </html>'''
-    if request.method == 'POST':
-        NAME = request.form
-        print(NAME)
-        return tasks()
+
+class Counter():
+    def __init__(self):
+        self.counter = 0
+
+
+my_counter = Counter()
+my_results = Decision()
+
+@app.route('/', methods=['POST', 'GET'])
+def start_page():
+    if request.method == 'GET':
+        return render_template('home_page.html')
+    elif request.method == 'POST':
+        name = request.form
+        my_results.result.append(name)
+        print('Данные пользователя', name)
+
+        if my_counter.counter == 3:
+            return 'КОНЕЦ ЗДЕСЬ'
+        return tasks(my_counter)
 
 
 @app.route('/tasks', methods=['POST', 'GET'])
-def tasks():
-    # global count
+def tasks(my_counter):
+    # база данных
     # DB = sqlite3.connect('DB/test_web.db')
     # SQL = DB.cursor()
-    # if request.method == 'GET':
-
-    # база данных
     # al = SQL.execute(f"SELECT * FROM task WHERE number == {count}").fetchall()
-    # img = str(random.choice(al[1]))
-    img = random.choice(['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif'])
-    # print(img)
-    # count += 1
-    return f'''<!doctype html>
-                    <html lang="en">
-                        <head>
-                        <meta charset="utf-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-                        <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
-                        <title>Проверочная работа</title>
-                        </head>
-                        <body>
-                        <form class="work_form" method="post">
-                        <img class="displayed" src="{img}">
-                        <div class="form-group">
-                                        <label for="about">Напишите решение:</label>
-                                        <textarea class="form-control" id="about" rows="5" name="decision"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" Centered button >Отправить</button>
-                        </form>
-                        <body>
-                    </html>'''
+    # img = str(random.choice(al[1])
+
+    al = ['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif']
+    img = random.choice(al)
+    # del al[al.index(img)]
+    my_counter.counter += 1
+    res = request.form
+    print('результат', res.getlist('decision'))
+    return render_template('tasks_page.html', img=img)
 
 
 if __name__ == '__main__':

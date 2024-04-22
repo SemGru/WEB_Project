@@ -13,6 +13,7 @@ class User():
         self.clas = ''
         self.name = ''
         self.res = []
+        self.time_start = datetime.datetime.today() - datetime.timedelta(minutes=-40)
 
 
 class Decision():
@@ -22,7 +23,7 @@ class Decision():
 
 class Counter():
     def __init__(self):
-        self.counter = 0
+        self.counter = 1
 
 
 my_counter = Counter()
@@ -47,17 +48,21 @@ def start_page():
         # база данных
         # DB = sqlite3.connect('DB/test_web.db')
         # SQL = DB.cursor()
-        # al = SQL.execute(f"SELECT * FROM task WHERE number == {count}").fetchall()
-        # img = str(random.choice(al[1])
+        # al = SQL.execute(f"SELECT * FROM task WHERE number == {my_counter.counter}").fetchall()
+        # print(my_counter.counter)
+        # img = ''
+        # if my_counter.counter <= 3:
+        #     img = str(random.choice(al[1]))
 
-        al = ['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif']
+        # без базы данных
+        al = ['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif', '/static/img/1270.gif']
         img = random.choice(al)
         # del al[al.index(img)]
         name = request.form
         if 'decision' in name:
             print(img, *name.getlist('decision'))
             my_user.res.append([img, str(name.getlist('decision')[0])])
-        if my_counter.counter == 3:
+        if my_counter.counter == 4:
             res_json()
             return 'КОНЕЦ РАБОТЫ!'
         return tasks(my_counter, img)
@@ -68,7 +73,12 @@ def tasks(my_counter, img):
     my_counter.counter += 1
     # res = request.form
     # print('результат', res.getlist('decision'))
-    return render_template('tasks_page.html', img=img)
+    return render_template('tasks_pag  e.html', img=img)
+
+
+@app.route('/admin_page', methods=['POST', 'GET'])
+def admin_page():
+    return render_template('admin_page.html')
 
 
 def res_json():

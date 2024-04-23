@@ -73,7 +73,7 @@ def tasks(my_counter, img):
     my_counter.counter += 1
     # res = request.form
     # print('результат', res.getlist('decision'))
-    return render_template('tasks_pag  e.html', img=img)
+    return render_template('tasks_page.html', img=img)
 
 
 @app.route('/admin_page', methods=['POST', 'GET'])

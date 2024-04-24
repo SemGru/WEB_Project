@@ -2,6 +2,7 @@ import random
 import sqlite3
 from flask import Flask, url_for, request, render_template
 import datetime
+from flask import send_file
 
 app = Flask(__name__)
 NAME = []
@@ -46,21 +47,23 @@ def start_page():
         # print('Данные пользователя', name)
 
         # база данных
-        # DB = sqlite3.connect('DB/test_web.db')
-        # SQL = DB.cursor()
-        # al = SQL.execute(f"SELECT * FROM task WHERE number == {my_counter.counter}").fetchall()
+        DB = sqlite3.connect('DB/test_web.db')
+        SQL = DB.cursor()
+        al = SQL.execute(f"SELECT * FROM task WHERE number == {my_counter.counter}").fetchall()
         # print(my_counter.counter)
-        # img = ''
-        # if my_counter.counter <= 3:
-        #     img = str(random.choice(al[1]))
+        img = ''
+        if my_counter.counter <= 3:
+            list_img = [i[1] for i in al]
+            img = str(random.choice(list_img))
+            # print('Картинка', list_img, img)
 
         # без базы данных
-        al = ['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif', '/static/img/1270.gif']
-        img = random.choice(al)
+        # al = ['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif', '/static/img/1270.gif']
+        # img = random.choice(al)
         # del al[al.index(img)]
         name = request.form
         if 'decision' in name:
-            print(img, *name.getlist('decision'))
+            # print(img, *name.getlist('decision'))
             my_user.res.append([img, str(name.getlist('decision')[0])])
         if my_counter.counter == 4:
             res_json()
@@ -78,7 +81,17 @@ def tasks(my_counter, img):
 
 @app.route('/admin_page', methods=['POST', 'GET'])
 def admin_page():
+    # if request.method == ['GET']:
+    #     return 'UJNJDJ'
+    # elif request.method == ['POST']:
+    #     print(2)
+    #     return render_template('admin_page.html')
     return render_template('admin_page.html')
+
+
+@app.route('/download_file')
+def download_file():
+    return send_file('table.xlsx')
 
 
 def res_json():

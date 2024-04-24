@@ -11,11 +11,11 @@ div {
   text-align: center;
 }
 
-form.work_form {n
+form.work_form {
     margin-left: auto;
     margin-right: auto;
     max-width: 600px;
-    background-color: #ffcc88;
+    background-color: #ffcc00;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 10px;
@@ -25,3 +25,10 @@ IMG.displayed {
     display: block;
     margin-left: auto;
     margin-right: auto }
+
+.botton_right {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: #ffcc00;
+}

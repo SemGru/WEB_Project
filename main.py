@@ -40,8 +40,8 @@ def start_page():
         name = request.form
 
         if 'surname' in name:
-            print(*name.getlist('surname'), *name.getlist('name'), *name.getlist('clas'),
-                  *name.getlist('var'))
+            # print(*name.getlist('surname'), *name.getlist('name'), *name.getlist('clas'),
+            #       *name.getlist('var'))
             my_user.clas = str(name.getlist('clas'))
             my_user.name = f"{str(name.getlist('surname')[0])} {str(name.getlist('name')[0])}"
         # print('Данные пользователя', name)
@@ -93,6 +93,15 @@ def admin_page():
 def download_file():
     return send_file('table.xlsx')
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return 'ЛОГИН'
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def reqister():
+    return 'РЕГИСТРАЦИЯ'
 
 def res_json():
     print(my_user.clas)

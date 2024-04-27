@@ -13,8 +13,9 @@ class User():
     def __init__(self):
         self.clas = ''
         self.name = ''
-        self.res = []
-        self.time_start = datetime.datetime.today() - datetime.timedelta(minutes=-40)
+        self.res_task = []
+        self.res_des = []
+        self.result = []
 
 
 class Decision():
@@ -37,34 +38,29 @@ def start_page():
     if request.method == 'GET':
         return render_template('home_page.html')
     elif request.method == 'POST':
-        name = request.form
 
-        if 'surname' in name:
-            # print(*name.getlist('surname'), *name.getlist('name'), *name.getlist('clas'),
-            #       *name.getlist('var'))
-            my_user.clas = str(name.getlist('clas'))
-            my_user.name = f"{str(name.getlist('surname')[0])} {str(name.getlist('name')[0])}"
-        # print('Данные пользователя', name)
-
-        # база данных
         DB = sqlite3.connect('DB/test_web.db')
         SQL = DB.cursor()
         al = SQL.execute(f"SELECT * FROM task WHERE number == {my_counter.counter}").fetchall()
-        # print(my_counter.counter)
         img = ''
         if my_counter.counter <= 3:
             list_img = [i[1] for i in al]
             img = str(random.choice(list_img))
-            # print('Картинка', list_img, img)
 
         # без базы данных
         # al = ['/static/img/1280.gif', '/static/img/1267.gif', '/static/img/1276.gif', '/static/img/1270.gif']
         # img = random.choice(al)
         # del al[al.index(img)]
         name = request.form
-        if 'decision' in name:
-            # print(img, *name.getlist('decision'))
-            my_user.res.append([img, str(name.getlist('decision')[0])])
+        if 'surname' in name:
+            my_user.clas = str(name.getlist('clas'))
+            my_user.name = f"{str(name.getlist('surname')[0])} {str(name.getlist('name')[0])}"
+            my_user.res_task.append(img)
+
+        elif 'decision' in name:
+            if img != '':
+                my_user.res_task.append(img)
+            my_user.res_des.append(str(name.getlist('decision')[0]))
         if my_counter.counter == 4:
             res_json()
             return 'КОНЕЦ РАБОТЫ!'
@@ -103,10 +99,13 @@ def login():
 def reqister():
     return 'РЕГИСТРАЦИЯ'
 
+
 def res_json():
     print(my_user.clas)
     print(my_user.name)
-    print(my_user.res)
+    for i in range(3):
+        my_user.result.append([my_user.res_task[i], my_user.res_des[i]])
+    print(my_user.result)
 
 
 if __name__ == '__main__':
